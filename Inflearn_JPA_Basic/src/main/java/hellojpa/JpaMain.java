@@ -14,17 +14,14 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        try {
-            //영속
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
+        try{
 
-            em.detach(member); // 특정 개체 준영속 상태
-            em.clear(); // 영속성 전부 초기화
+            Member member = new Member();
+            member.setId(2L);
+            member.setUsername("B");
+            member.setRoleType(RoleType.ADMIN);
 
-            Member member2 = em.find(Member.class, 150L);
-            
-            System.out.println("===============");
+            em.persist(member);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
