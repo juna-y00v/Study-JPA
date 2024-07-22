@@ -15,22 +15,20 @@ public class JpaMain {
         tx.begin();
 
         try {
-           /* Member member = new Member();
-            member.setId(2L);
-            member.setName("HelloB");
 
-            em.persist(member);*/ // 등록
+            //비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
 
-            Member findMember = em.find(Member.class, 1L); //조회
-            List<Member> findMembers = em.createQuery("select m from Member as m ", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList(); // JPQL
+            //영속
+            System.out.println("=== BEFORE ===");
+            em.persist(member);
+            System.out.println("=== AFTER ===");
 
-            for (Member member : findMembers) {
-                System.out.println("member.getName() = " + member.getName());
-            }
-//            findMember.setName("HelloJPA"); // 수정
+//          em.detach(member); 회원 엔티티를 영속성 컨텍스트에서 분리, 준영속 상태
+//          em.remove(member); //객체를 삭제한 상태(삭제)
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
