@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @SequenceGenerator(
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName= "MEMBER_SEQ",
-        initialValue = 1, allocationSize = 50)
+        initialValue = 1, allocationSize = 1)
 public class Member {
 
     @Id
