@@ -23,10 +23,10 @@ public class JpaMain {
 
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team);
+//            member.changeTeam(team); //setTeam 메서드안에 team.getMembers().add(this) 넣기 연관관계 편의 메서드
             em.persist(member);
 
-//            team.getMembers().add(member);
+            team.addMember(member); // 연관관계 편의 메서드
 
 //            em.flush();
 //            em.clear();
@@ -35,11 +35,9 @@ public class JpaMain {
             List<Member> members = findTeam.getMembers();
 
             System.out.println("==========");
-            for (Member m : members) {
-                System.out.println("m = " +m.getName());
-            }
+            System.out.println("members = " +findTeam); // 스택오버플로우 발생 toString()을 서로 호출
             System.out.println("==========");
-            
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
