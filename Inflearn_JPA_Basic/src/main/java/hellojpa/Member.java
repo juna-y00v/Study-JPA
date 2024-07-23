@@ -14,6 +14,10 @@ public class Member {
     @Column(name = "USERNAME")
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false) // 일대다 양방향 시도
+    private Team team;
+
     public Long getId() {
         return id;
     }

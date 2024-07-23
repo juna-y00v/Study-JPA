@@ -23,7 +23,7 @@ public class JpaMain {
             team.getMembers().add(member);
 
             em.persist(team);
-            
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
