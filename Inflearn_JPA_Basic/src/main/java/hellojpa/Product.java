@@ -5,27 +5,15 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
-public class Member {
+public class Product {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Id @GeneratedValue
     private Long id;
 
-    @Column(name = "USERNAME")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false) // 일대다 양방향 시도
-    private Team team;
-
-    @OneToOne
-    @JoinColumn(name = "LOCOKER_ID")
-    private Locker locker;
-
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "product")
     private List<MemberProduct> memberProducts = new ArrayList<>();
 
     public Long getId() {
