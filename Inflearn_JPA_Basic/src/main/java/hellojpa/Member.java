@@ -14,9 +14,6 @@ public class Member {
     @Column(name = "USERNAME")
     private String name;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
-
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
@@ -43,19 +40,5 @@ public class Member {
 
     public void setTeam(Team team) {
         this.team = team;
-    }
-
-//    public void changeTeam(Team team) {
-//        this.team = team;
-//        team.getMembers().add(this);
-//    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", team=" + team +
-                '}';
     }
 }
