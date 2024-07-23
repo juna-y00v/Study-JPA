@@ -18,6 +18,10 @@ public class Member {
     @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false) // 일대다 양방향 시도
     private Team team;
 
+    @OneToOne
+    @JoinColumn(name = "LOCOKER_ID")
+    private Locker locker;
+
     public Long getId() {
         return id;
     }
