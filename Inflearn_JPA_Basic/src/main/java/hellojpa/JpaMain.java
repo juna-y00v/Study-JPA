@@ -17,6 +17,7 @@ public class JpaMain {
         tx.begin();
 
         try {
+            //JPQL
             List<Member> result = em.createQuery(
                     "select m from Member m where m.name like '%kim%'",Member.class
             ).getResultList();
