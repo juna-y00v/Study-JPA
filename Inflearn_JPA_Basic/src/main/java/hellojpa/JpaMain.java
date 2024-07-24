@@ -20,9 +20,17 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //네이티브 sql
-            em.createNativeQuery("select MEMBER_ID, city, street, zipcode, username from MEMBER")
-                            .getResultList();
+
+            Member member = new Member();
+            member.setName("member1");
+            em.persist(member);
+
+            //flush -> commit, query
+            em.flush();
+            //dbconn.executeQuery("select * from member) jpa 기술이 아니기에 적절한 flush 필요
+            for (Member member1 : resultList) {
+                System.out.println("member1 = " + member1);
+            }
 
             tx.commit();
         } catch (Exception e) {
