@@ -21,13 +21,13 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            Member m1 = em.find(Member.class, member1.getId());
-            System.out.println("m1 = " + m1.getClass());
+            Member refMember = em.getReference(Member.class, member1.getId());
+            System.out.println("refMember = " + refMember.getClass()); //Proxy
 
-            Member reference = em.getReference(Member.class, member1.getId());
-            System.out.println("reference = " + reference.getClass());
+            Member findMember = em.find(Member.class, member1.getId());
+            System.out.println("findMember = " + findMember.getClass()); //Member -> 하지만 Proxy 반환 == 보장을 위해
 
-            System.out.println("a == a : " + (m1 == reference));
+            System.out.println("refMember == findMember : " + (refMember == findMember));
 
 
             tx.commit();
