@@ -22,17 +22,13 @@ public class JpaMain {
             member2.setName("member2");
             em.persist(member2);
 
-
             em.flush();
             em.clear();
 
-            //
-//            Member findMember = em.find(Member.class, member.getId());
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("before findMember = " + findMember.getClass()); // 프록시 객체비교는 instance of 사용
-            System.out.println("findMember.Name = " + findMember.getName());
-            System.out.println("after findMember = " + findMember.getClass());
+            Member m1 = em.find(Member.class, member1.getId());
+            Member m2 = em.getReference(Member.class, member2.getId());
 
+            logic(m1, m2);
 
             tx.commit();
         } catch (Exception e) {
@@ -41,6 +37,11 @@ public class JpaMain {
             em.close();
         }
         emf.close();
+    }
+
+    private static void logic(Member m1, Member m2) {
+        System.out.println("m1 == m2 : " + (m1 instanceof Member));
+        System.out.println("m1 == m2 : " + (m2 instanceof Member));
     }
 
 }
