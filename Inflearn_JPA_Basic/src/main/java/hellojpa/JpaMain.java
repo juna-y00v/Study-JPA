@@ -1,6 +1,7 @@
 package hellojpa;
 
 import jakarta.persistence.*;
+import org.hibernate.Hibernate;
 
 public class JpaMain {
 
@@ -23,11 +24,11 @@ public class JpaMain {
 
             Member refMember = em.getReference(Member.class, member1.getId());
             System.out.println("refMember = " + refMember.getClass()); //Proxy
+            Hibernate.initialize(refMember); // 강제 초기화
 
-//            em.detach(refMember);
-            em.clear(); // 영속성에서 제거 됨 refMember 따라서  LazyInitializationException 발생
+            //System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+            //로드 됐는지 확인할 수 있다.
 
-            refMember.getName();
 
 
 
