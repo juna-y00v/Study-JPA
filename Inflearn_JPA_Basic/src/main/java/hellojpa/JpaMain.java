@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.Hibernate;
 
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
 
@@ -16,15 +17,35 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Address address = new Address("city", "street", "10000");
+            Member member = new Member();
+            member.setName("member1");
+            member.setHomeAddress(new Address("homeCity", "street", "10000"));
 
-            Member member1 = new Member();
-            member1.setName("member1");
-            member1.setHomeAddress(address);
-            em.persist(member1);
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
 
-            Address newAddress = new Address("NewCity", address.getStreet(), address.getZipcode());
-            member1.setHomeAddress(newAddress);
+            member.getAddressHistory().add(new Address("old1", "street", "10000"));
+            member.getAddressHistory().add(new Address("old2", "street", "10000"));
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            //조회
+            System.out.println("========== Start ===========");
+            Member findMember = em.find(Member.class, member.getId());
+
+            List<Address> addressHistory = findMember.getAddressHistory();
+            for (Address address : addressHistory) {
+                System.out.println("address = " + address.getCity());
+            }
+
+            Set<String> favoriteFoods = findMember.getFavoriteFoods();
+            for (String favoriteFood : favoriteFoods) {
+                System.out.println("favoritedFodd = " + favoriteFood);
+            }
 
             tx.commit();
         } catch (Exception e) {
