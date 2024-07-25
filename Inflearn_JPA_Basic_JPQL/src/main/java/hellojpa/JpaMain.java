@@ -43,11 +43,10 @@ public class JpaMain {
             member3.setTeam(teamB);
             em.persist(member3);
 
-            em.flush();
-            em.clear();
-
             int count = em.createQuery("update Member m set m.age = 20")
                     .executeUpdate();
+
+            em.clear();// 벌크 연산후 영속성 컨텍스트 초기화
 
             System.out.println("count = " + count);
 
