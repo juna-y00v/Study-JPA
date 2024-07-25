@@ -3,6 +3,8 @@ package hellojpa;
 import hellojpa.jpql.Member;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 public class JpaMain {
 
     public static void main(String[] args) {
@@ -21,13 +23,12 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-            TypedQuery<Member> query1= em.createQuery("select m from Member m", Member.class);
-            //타입 정보 명확
-            TypedQuery<String> query2= em.createQuery("select m.username from Member m", String.class);
-            //타입 정보 명확 TypedQuery 사용가능
-            Query query3= em.createQuery("select m.username, m.age from Member m");
-            //타입 정복 불명확하기에 Query 사용
-            
+            TypedQuery<Member> query = em.createQuery("select m from Member m where m.id = 10", Member.class);
+
+            Member result = query.getSingleResult(); // 결과가 없거나 둘 이상이면 예외 발생
+            System.out.println("result = " + result);
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
