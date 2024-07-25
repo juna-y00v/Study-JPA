@@ -23,11 +23,10 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-            TypedQuery<Member> query = em.createQuery("select m from Member m where m.id = 10", Member.class);
-
-            Member result = query.getSingleResult(); // 결과가 없거나 둘 이상이면 예외 발생
-            System.out.println("result = " + result);
-
+            Member result = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                    .setParameter("username", "member1")
+                    .getSingleResult();
+            System.out.println("result = " + result.getUsername());
 
             tx.commit();
         } catch (Exception e) {
