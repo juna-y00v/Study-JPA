@@ -33,7 +33,7 @@ public class JpaMain {
             em.clear();
 
 //            String query = "select m.team From Member m"; // 묵시적 내부 조인 발생
-//            String query = "select t.members From Team t"; // 컬렉션 값 연관 경로 묵시적 내부 조인 발생
+            String query = "select t.members From Team t"; // 컬렉션 값 연관 경로 묵시적 내부 조인 발생
             
             Collection result = em.createQuery(query, Collection.class)
                     .getResultList();
