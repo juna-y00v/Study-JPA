@@ -46,9 +46,11 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select distinct t From Team t join fetch t.members";
+            String query = "select m from Member m join fetch m.team t"; // 다대일로 변환시켜서 페치 조인하면 페이징 가능
 
             List<Team> result = em.createQuery(query, Team.class)
+                    .setFirstResult(0)
+                    .setMaxResults(1)
                     .getResultList();
 
             System.out.println("result.size() = " + result.size());
