@@ -27,8 +27,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<Team> result = em.createQuery("select m.team from Member m", Team.class)
-                    .getResultList(); //반환된 엔티티들은 다 영속성 관리됨
+            List<Team> result = em.createQuery("select m.team from Member m join m.team t", Team.class)
+                    .getResultList(); // sql처럼 join될것같으면 join 명시적하자
 
             tx.commit();
         } catch (Exception e) {
