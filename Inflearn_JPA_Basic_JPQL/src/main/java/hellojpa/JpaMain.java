@@ -46,13 +46,10 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
-                    .setParameter("username", "회원1")
-                    .getResultList();
+            int count = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
 
-            for (Member member : resultList) {
-                System.out.println("member = " + member);
-            }
+            System.out.println("count = " + count);
 
             tx.commit();
         } catch (Exception e) {
