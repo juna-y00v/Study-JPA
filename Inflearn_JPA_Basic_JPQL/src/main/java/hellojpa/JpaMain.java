@@ -1,6 +1,7 @@
 package hellojpa;
 
 import hellojpa.jpql.Member;
+import hellojpa.jpql.Team;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,10 +24,11 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-            Member result = em.createQuery("select m from Member m where m.username = :username", Member.class)
-                    .setParameter("username", "member1")
-                    .getSingleResult();
-            System.out.println("result = " + result.getUsername());
+            em.flush();
+            em.clear();
+
+            List<Team> result = em.createQuery("select m.team from Member m", Team.class)
+                    .getResultList(); //반환된 엔티티들은 다 영속성 관리됨
 
             tx.commit();
         } catch (Exception e) {
