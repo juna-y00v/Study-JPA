@@ -2,6 +2,7 @@ package hellojpa;
 
 import hellojpa.jpql.*;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,18 +34,23 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-//            String query = "select coalesce(m.username, '이름 없는 회원') as username " +
-//                    "from Member m";
-            String query = "select nullif(m.username, '관리자') as username " +
-                    "from Member m";
+//            String query = "select concat('a', 'b') from Member m";
 
+//            String query = "select 'a' || 'b' from Member m";
 
-            List<String> result = em.createQuery(query, String.class)
+//            String query = "select substring(m.username,2,3) from Member m";
+
+//            String query = "select locate('de','abcdefg') from Member m";
+
+            String query = "select size(t.members) from Team t ";
+
+            List<Integer> result = em.createQuery(query, Integer.class)
                     .getResultList();
-            for (String string : result) {
-                System.out.println("string = " + string);
+
+            for (Integer s : result) {
+                System.out.println("s = " + s);
             }
-            
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
