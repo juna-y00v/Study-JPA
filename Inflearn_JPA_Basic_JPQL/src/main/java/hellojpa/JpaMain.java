@@ -1,12 +1,10 @@
 package hellojpa;
 
-import hellojpa.jpql.Address;
-import hellojpa.jpql.Member;
-import hellojpa.jpql.MemberDTO;
-import hellojpa.jpql.Team;
+import hellojpa.jpql.*;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 public class JpaMain {
 
@@ -26,19 +24,27 @@ public class JpaMain {
             em.persist(team);
 
             Member member = new Member();
-            member.setUsername("teamA");
+            member.setUsername("member1");
             member.setAge(10);
+            member.setType(MemberType.ADMIN);
             member.changeTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            String query = "select m from Member m left join Team t on m.username = t.name";
-            List<Member> result = em.createQuery(query, Member.class)
+            String query = "select m.username, 'HELLO', true from Member m " +
+                    "where m.type = :userType";
+
+            List<Object[]> result = em.createQuery(query)
+                    .setParameter("userType",MemberType.ADMIN)
                             .getResultList();
 
-            System.out.println("result.size() = " + result.size());
+            for (Object[] objects : result) {
+                System.out.println("objects = " + objects[0]);
+                System.out.println("objects = " + objects[1]);
+                System.out.println("objects = " + objects[2]);
+            }
 
 
             tx.commit();
