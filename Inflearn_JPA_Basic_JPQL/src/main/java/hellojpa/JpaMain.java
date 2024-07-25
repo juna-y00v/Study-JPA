@@ -1,5 +1,6 @@
 package hellojpa;
 
+import hellojpa.jpql.Address;
 import hellojpa.jpql.Member;
 import hellojpa.jpql.Team;
 import jakarta.persistence.*;
@@ -27,8 +28,12 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<Team> result = em.createQuery("select m.team from Member m join m.team t", Team.class)
-                    .getResultList(); // sql처럼 join될것같으면 join 명시적하자
+            List<Object[]> resultList = em.createQuery("select m.username ,m.age from Member m")
+                    .getResultList();
+
+            Object[] result = resultList.get(0);
+            System.out.println("username = " + result[0]);
+            System.out.println("age = " + result[1]);
 
             tx.commit();
         } catch (Exception e) {
