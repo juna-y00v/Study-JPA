@@ -1,6 +1,7 @@
 package study.querydsl;
 
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.controller.entity.Member;
 import study.querydsl.controller.entity.QMember;
 import study.querydsl.controller.entity.Team;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static study.querydsl.controller.entity.QMember.*;
@@ -95,5 +98,30 @@ public class QuerydslBasicTest {
                 .fetchOne();
 
         assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    public void resultFetch() {
+        List<Member> fetch = query
+                .selectFrom(member)
+                .fetch();
+
+        Member fetchOne = query
+                .selectFrom(member).fetchOne();
+
+        Member fetchFirst = query // NotUniqueResultException 발생
+                .selectFrom(member)
+                .fetchFirst();
+
+        QueryResults<Member> results = query
+                .selectFrom(member)
+                .fetchResults();
+
+        results.getTotal();
+        List<Member> content = results.getResults();
+
+        long total = query
+                .selectFrom(member)
+                .fetchCount();
     }
 }
