@@ -106,10 +106,11 @@ public class QuerydslBasicTest {
                 .selectFrom(member)
                 .fetch();
 
-        Member fetchOne = query
-                .selectFrom(member).fetchOne();
+//        Member fetchOne = query // NotUniqueResultException 발생
+//                .selectFrom(member)
+//                .fetchOne();
 
-        Member fetchFirst = query // NotUniqueResultException 발생
+        Member fetchFirst = query
                 .selectFrom(member)
                 .fetchFirst();
 
